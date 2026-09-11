@@ -156,7 +156,7 @@ export default function HeroBanner() {
           height: 92vh;
           min-height: 560px;
           max-height: 900px;
-          background: #070707;
+          background: #0C1626;
           overflow: hidden;
           cursor: default;
         }
@@ -189,25 +189,25 @@ export default function HeroBanner() {
         .slide-overlay {
           background: linear-gradient(
             105deg,
-            rgba(0,0,0,0.65) 0%,
-            rgba(0,0,0,0.45) 50%,
-            rgba(0,0,0,0.2) 100%
+            rgba(12,22,38,0.65) 0%,
+            rgba(12,22,38,0.45) 50%,
+            rgba(12,22,38,0.2) 100%
           );
         }
         .slide-overlay.center {
           background: linear-gradient(
             180deg,
-            rgba(0,0,0,0.3) 0%,
-            rgba(0,0,0,0.5) 38%,
-            rgba(0,0,0,0.3) 100%
+            rgba(12,22,38,0.3) 0%,
+            rgba(12,22,38,0.5) 38%,
+            rgba(12,22,38,0.3) 100%
           );
         }
         .slide-overlay.right {
           background: linear-gradient(
             255deg,
-            rgba(0,0,0,0.65) 0%,
-            rgba(0,0,0,0.45) 50%,
-            rgba(0,0,0,0.2) 100%
+            rgba(12,22,38,0.65) 0%,
+            rgba(12,22,38,0.45) 50%,
+            rgba(12,22,38,0.2) 100%
           );
         }
 
@@ -236,8 +236,8 @@ export default function HeroBanner() {
           font-weight: 500;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #D4AF37;
-          border: 1px solid #D4AF37;
+          color: #E8EFF8;
+          border: 1px solid #E8EFF8;
           padding: 5px 14px;
           margin-bottom: 22px;
           opacity: 0;
@@ -252,7 +252,7 @@ export default function HeroBanner() {
           font-weight: 300;
           line-height: 1.05;
           letter-spacing: -0.01em;
-          color: #D4AF37;
+          color: #E8EFF8;
           white-space: pre-line;
           margin: 0 0 20px;
           opacity: 0;
@@ -265,7 +265,7 @@ export default function HeroBanner() {
           font-size: 0.95rem;
           font-weight: 300;
           line-height: 1.65;
-          color: #ccc;
+          color: #AFC0D8;
           max-width: 400px;
           margin-bottom: 36px;
           opacity: 0;
@@ -286,8 +286,8 @@ export default function HeroBanner() {
         .banner-content.center .btn-row { justify-content: center; }
 
         .btn-primary {
-          background: #D4AF37;
-          color: #070707;
+          background: #E8EFF8;
+          color: #0C1626;
           font-family: 'DM Sans', sans-serif;
           font-size: 0.8rem;
           font-weight: 500;
@@ -298,22 +298,22 @@ export default function HeroBanner() {
           cursor: pointer;
           transition: background 0.25s, transform 0.2s;
         }
-        .btn-primary:hover { background: #b8932c; transform: translateY(-2px); }
+        .btn-primary:hover { background: #FFFFFF; transform: translateY(-2px); }
 
         .btn-ghost {
           background: transparent;
-          color: #D4AF37;
+          color: #E8EFF8;
           font-family: 'DM Sans', sans-serif;
           font-size: 0.8rem;
           font-weight: 500;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           padding: 14px 34px;
-          border: 1px solid #D4AF37;
+          border: 1px solid #E8EFF8;
           cursor: pointer;
           transition: background 0.25s, color 0.25s, transform 0.2s;
         }
-        .btn-ghost:hover { background: #D4AF37; color: #070707; transform: translateY(-2px); }
+        .btn-ghost:hover { background: #E8EFF8; color: #0C1626; transform: translateY(-2px); }
 
         /* ── progress bar ── */
         .progress-bar {
@@ -331,7 +331,7 @@ export default function HeroBanner() {
           transform: translateY(-50%);
           z-index: 8;
           background: rgba(20,20,20,0.8);
-          border: 1px solid #333;
+          border: 1px solid #2A3C5F;
           width: 48px;
           height: 48px;
           display: flex;
@@ -342,12 +342,12 @@ export default function HeroBanner() {
           backdrop-filter: blur(6px);
         }
         .arrow-btn:hover {
-          background: #D4AF37;
-          border-color: #D4AF37;
+          background: #E8EFF8;
+          border-color: #E8EFF8;
           transform: translateY(-50%) scale(1.08);
         }
-        .arrow-btn:hover svg { stroke: #070707; }
-        .arrow-btn svg { stroke: #D4AF37; transition: stroke 0.2s; }
+        .arrow-btn:hover svg { stroke: #0C1626; }
+        .arrow-btn svg { stroke: #E8EFF8; transition: stroke 0.2s; }
         .arrow-left  { left: 28px; }
         .arrow-right { right: 28px; }
 
@@ -366,14 +366,14 @@ export default function HeroBanner() {
           width: 7px;
           height: 7px;
           border-radius: 50%;
-          border: 1px solid #D4AF37;
+          border: 1px solid #E8EFF8;
           background: transparent;
           cursor: pointer;
           padding: 0;
           transition: background 0.25s, transform 0.2s;
         }
         .dot.active {
-          background: #D4AF37;
+          background: #E8EFF8;
           transform: scale(1.3);
         }
 
@@ -385,9 +385,9 @@ export default function HeroBanner() {
           z-index: 8;
           font-size: 0.72rem;
           letter-spacing: 0.12em;
-          color: #666;
+          color: #7E93B4;
         }
-        .slide-counter span { color: #D4AF37; font-weight: 500; }
+        .slide-counter span { color: #E8EFF8; font-weight: 500; }
 
         @keyframes fadeUp {
           to { opacity: 1; transform: translateY(0); }
@@ -398,7 +398,7 @@ export default function HeroBanner() {
           .banner-content { padding: 0 5vw; }
           .banner-content.right { justify-content: flex-start; }
           .slide-overlay.right {
-            background: linear-gradient(180deg,rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.6) 55%,rgba(0,0,0,0.2) 100%);
+            background: linear-gradient(180deg,rgba(12,22,38,0.2) 0%,rgba(12,22,38,0.6) 55%,rgba(12,22,38,0.2) 100%);
           }
         }
       `}</style>

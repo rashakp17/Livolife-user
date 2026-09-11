@@ -16,11 +16,11 @@ const TopNavbar = () => {
             className="flex items-center mr-3 lg:mr-10"
           >
             <Image
-              src="/images/logo.png"
-              alt="Mas Fashion World Logo"
-              width={80}
-              height={80}
-              className="rounded-full"
+              src="/images/livo-logo.png"
+              alt="Livolife"
+              width={560}
+              height={258}
+              className="w-[104px] md:w-[124px] h-auto"
               priority
             />
           </Link>

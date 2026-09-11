@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
 import { PaymentBadge, SocialNetworks } from "./footer.types";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
@@ -63,14 +61,15 @@ const Footer = () => {
         <div className="max-w-frame mx-auto">
           <nav className="lg:grid lg:grid-cols-12 mb-8">
             <div className="flex flex-col lg:col-span-3 lg:max-w-[248px]">
-              <h1
-                className={cn([
-                  integralCF.className,
-                  "text-[28px] lg:text-[32px] mb-6 text-primary",
-                ])}
-              >
-                Mas Fashion World
-              </h1>
+              <Link href="/" className="mb-6 inline-block">
+                <Image
+                  src="/images/livo-logo.png"
+                  alt="Livolife"
+                  width={560}
+                  height={258}
+                  className="w-[150px] h-auto"
+                />
+              </Link>
               <p className="text-muted-foreground text-sm mb-9">
                 We have clothes that suits your style and which you’re proud to
                 wear. From women to men.

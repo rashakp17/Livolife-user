@@ -15,8 +15,8 @@ const footerLinksData: FooterLinks[] = [
       },
       {
         id: 12,
-        label: "Contact Number: 9562321272",
-        url: "tel:9562321272",
+        label: "Contact Number: 9744147967",
+        url: "tel:9744147967",
       },
     ],
   },

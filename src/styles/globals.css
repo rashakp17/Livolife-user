@@ -5,17 +5,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --foreground-rgb: 240, 244, 248;
+  --background-start-rgb: 12, 22, 38;
+  --background-end-rgb: 12, 22, 38;
 }
 
 @layer utilities {
@@ -24,59 +16,64 @@
   }
 }
 
+/*
+  Brand palette derived from the livo logo (public/images/livo-logo.jpeg):
+  logo navy  #152341  ->  hsl(221 51% 17%)   [cards / raised surfaces]
+  logo mark  #ffffff  ->  near-white ice     [primary actions, headings]
+*/
 @layer base {
   :root {
-    --background: 0 0% 5%;
-    --foreground: 45 30% 92%;
-    --card: 0 0% 8%;
-    --card-foreground: 45 30% 92%;
-    --popover: 0 0% 8%;
-    --popover-foreground: 45 30% 92%;
-    --primary: 45 64% 52%;
-    --primary-foreground: 0 0% 5%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 45 30% 92%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 40 10% 60%;
-    --accent: 45 64% 15%;
-    --accent-foreground: 45 64% 52%;
-    --destructive: 0 84.2% 60.2%;
+    --background: 221 52% 10%;
+    --foreground: 210 40% 96%;
+    --card: 221 51% 17%;
+    --card-foreground: 210 40% 96%;
+    --popover: 221 51% 17%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 210 45% 94%;
+    --primary-foreground: 221 51% 15%;
+    --secondary: 221 45% 22%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 221 45% 22%;
+    --muted-foreground: 214 28% 74%;
+    --accent: 221 46% 26%;
+    --accent-foreground: 210 45% 95%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 45 64% 52%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --border: 221 34% 27%;
+    --input: 221 34% 27%;
+    --ring: 210 45% 80%;
+    --chart-1: 221 60% 58%;
+    --chart-2: 199 65% 55%;
+    --chart-3: 262 45% 62%;
+    --chart-4: 174 50% 48%;
+    --chart-5: 210 45% 88%;
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 5%;
-    --foreground: 45 30% 92%;
-    --card: 0 0% 8%;
-    --card-foreground: 45 30% 92%;
-    --popover: 0 0% 8%;
-    --popover-foreground: 45 30% 92%;
-    --primary: 45 64% 52%;
-    --primary-foreground: 0 0% 5%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 45 30% 92%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 40 10% 60%;
-    --accent: 45 64% 15%;
-    --accent-foreground: 45 64% 52%;
-    --destructive: 0 62.8% 30.6%;
+    --background: 221 52% 10%;
+    --foreground: 210 40% 96%;
+    --card: 221 51% 17%;
+    --card-foreground: 210 40% 96%;
+    --popover: 221 51% 17%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 210 45% 94%;
+    --primary-foreground: 221 51% 15%;
+    --secondary: 221 45% 22%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 221 45% 22%;
+    --muted-foreground: 214 28% 74%;
+    --accent: 221 46% 26%;
+    --accent-foreground: 210 45% 95%;
+    --destructive: 0 62% 45%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 45 64% 52%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --border: 221 34% 27%;
+    --input: 221 34% 27%;
+    --ring: 210 45% 80%;
+    --chart-1: 221 60% 58%;
+    --chart-2: 199 65% 55%;
+    --chart-3: 262 45% 62%;
+    --chart-4: 174 50% 48%;
+    --chart-5: 210 45% 88%;
   }
 }
 
@@ -87,16 +84,19 @@
   body {
     @apply bg-background text-foreground;
   }
-  
-  /* Filter black SVG icons to render in a luxurious gold/white hue */
-  img[src*="cart.svg"], 
-  img[src*="search.svg"], 
-  img[src*="envelope.svg"], 
-  img[src*="close.svg"] {
-    filter: invert(0.9) sepia(0.6) saturate(2) hue-rotate(15deg);
+
+  /* Render black SVG icons as the logo's white mark */
+  img[src*="cart.svg"],
+  img[src*="search.svg"],
+  img[src*="envelope.svg"],
+  img[src*="close.svg"],
+  img[src*="menu.svg"],
+  img[src*="times.svg"],
+  img[src*="trash.svg"] {
+    filter: brightness(0) invert(1);
   }
 
-  /* Override arbitrary backgrounds to match dark card/secondary styles */
+  /* Override arbitrary light backgrounds from the base template */
   .bg-\[\#F0F0F0\],
   .bg-\[\#F0EEED\] {
     background-color: hsl(var(--secondary)) !important;
@@ -113,41 +113,37 @@
     border-color: hsl(var(--border)) !important;
   }
   .placeholder\:text-black\/40::placeholder {
-    color: hsla(45, 10%, 90%, 0.45) !important;
+    color: hsla(210, 30%, 92%, 0.45) !important;
   }
   .hover\:text-white:hover {
     color: hsl(var(--primary-foreground)) !important;
   }
 
-  /* Override Tailwind's semi-transparent black text classes to fit dark background */
+  /* Semi-transparent black text -> cool near-white on navy */
   .text-black\/60 {
-    color: hsla(45, 10%, 90%, 0.6) !important;
+    color: hsla(210, 30%, 94%, 0.6) !important;
   }
   .text-black\/50 {
-    color: hsla(45, 10%, 90%, 0.5) !important;
+    color: hsla(210, 30%, 94%, 0.5) !important;
   }
   .text-black\/40 {
-    color: hsla(45, 10%, 90%, 0.4) !important;
+    color: hsla(210, 30%, 94%, 0.4) !important;
   }
   .text-black\/30 {
-    color: hsla(45, 10%, 90%, 0.3) !important;
+    color: hsla(210, 30%, 94%, 0.3) !important;
   }
   .text-black\/5 {
-    color: hsla(45, 10%, 90%, 0.05) !important;
+    color: hsla(210, 30%, 94%, 0.05) !important;
   }
 
   /* Override transparent black borders */
-  .border-black\/10 {
-    border-color: hsl(var(--border)) !important;
-  }
-  .border-black\/20 {
-    border-color: hsl(var(--border)) !important;
-  }
+  .border-black\/10,
+  .border-black\/20,
   .border-black\/5 {
     border-color: hsl(var(--border)) !important;
   }
 
-  /* Map bg-black (originally black buttons/banners) to Gold */
+  /* Map bg-black (template's black buttons/banners) to the logo's white mark */
   .bg-black {
     background-color: hsl(var(--primary)) !important;
   }
@@ -159,7 +155,7 @@
 
   /* Handle hovers */
   .hover\:bg-black:hover {
-    background-color: #b8932c !important;
+    background-color: hsl(210 45% 82%) !important;
     color: hsl(var(--primary-foreground)) !important;
   }
 }

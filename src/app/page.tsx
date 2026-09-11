@@ -1,5 +1,6 @@
 import ProductListSec from "@/components/common/ProductListSec";
 import HeroBanner from "@/components/homepage/Header";
+import CategoriesSec from "@/components/homepage/CategoriesSec";
 import { Product } from "@/types/product.types";
 
 export const revalidate = 60;
@@ -43,6 +44,7 @@ export default async function Home() {
     <>
       <HeroBanner />
       <main className="my-[50px] sm:my-[72px]">
+        <CategoriesSec />
         <ProductListSec
           title="Explore for More"
           data={products}
