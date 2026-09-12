@@ -20,7 +20,10 @@ const CartBtn = () => {
         className="max-w-[22px] max-h-[22px]"
       />
       {cart && cart.totalQuantities > 0 && (
-        <span className="border bg-black text-white rounded-full w-fit-h-fit px-1 text-xs absolute -top-3 left-1/2 -translate-x-1/2">
+        // Use the theme tokens, not bg-black/text-white: globals.css remaps
+        // .bg-black to --primary, which is near-white inside the navbar's
+        // .surface-dark scope, so the white label became invisible on it.
+        <span className="bg-primary text-primary-foreground rounded-full min-w-[18px] px-1 text-xs font-semibold leading-[18px] text-center absolute -top-3 left-1/2 -translate-x-1/2">
           {cart.totalQuantities}
         </span>
       )}

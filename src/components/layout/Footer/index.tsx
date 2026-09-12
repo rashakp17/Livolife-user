@@ -71,8 +71,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="text-muted-foreground text-sm mb-9">
-                We have clothes that suits your style and which you’re proud to
-                wear. From women to men.
+                Online B to B Medical Wholesale.
               </p>
               <div className="flex items-center">
                 {socialsData.map((social) => (

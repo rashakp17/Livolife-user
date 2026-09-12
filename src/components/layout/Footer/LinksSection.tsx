@@ -10,13 +10,15 @@ const footerLinksData: FooterLinks[] = [
     children: [
       {
         id: 11,
-        label: "Email: Shameenaharis1272@gmail.com",
-        url: "mailto:Shameenaharis1272@gmail.com",
+        label: "Sales.livo@gmail.com",
+        url: "mailto:Sales.livo@gmail.com",
       },
       {
         id: 12,
-        label: "Contact Number: 9744147967",
-        url: "tel:9744147967",
+        // Displayed as on the card; dialled with the country code so the link
+        // works from a phone.
+        label: "For Kerala : 6238760790",
+        url: "tel:+916238760790",
       },
     ],
   },

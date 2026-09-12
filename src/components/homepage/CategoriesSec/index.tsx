@@ -30,7 +30,10 @@ function resolveImage(c: ApiCategory): string | null {
 async function getCategories(): Promise<Category[]> {
   if (!api) return [];
   try {
-    const res = await fetch(`${api}/category`, { next: { revalidate: 300 } });
+    // 60s to match the page's own revalidate and the product fetch. At the
+    // previous 300s, a category added in admin took up to 5 minutes to appear
+    // while products appeared in 1 — which reads as "the category is missing".
+    const res = await fetch(`${api}/category`, { next: { revalidate: 60 } });
     if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
       return [];
     }
@@ -60,7 +63,7 @@ const CategoriesSec = async () => {
 
   return (
     // Sits directly on the light blue page background; cards are white.
-    <section className="py-9 sm:py-14">
+    <section className="pb-9 sm:pb-14">
       <div className="max-w-frame mx-auto px-4 xl:px-0">
         <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-5 sm:mb-7">
           Categories

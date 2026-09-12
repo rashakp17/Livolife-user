@@ -46,7 +46,10 @@ export default async function Home() {
   return (
     <>
       <HeroBanner />
-      <main className="my-[50px] sm:my-[72px]">
+      {/* Top spacing kept small so Categories sits close under the banner;
+         it still applies if CategoriesSec renders nothing and ProductListSec
+         becomes the first child. */}
+      <main className="mt-6 mb-[50px] sm:mt-8 sm:mb-[72px]">
         <CategoriesSec />
         <ProductListSec
           title="Explore for More"
