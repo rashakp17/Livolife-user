@@ -170,6 +170,13 @@
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 640px) {
+  /* 92vh/560px is desktop-sized and swallows a phone screen. The slide art is
+     wider than it is tall, so a shorter box also crops less horizontally. */
+  .banner-root {
+    height: 56vh;
+    min-height: 320px;
+    max-height: 460px;
+  }
   .arrow-btn { display: none; }
   .banner-content { padding: 0 5vw; }
   .banner-content.right { justify-content: flex-start; }

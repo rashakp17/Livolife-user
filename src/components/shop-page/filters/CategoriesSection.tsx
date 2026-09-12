@@ -77,12 +77,12 @@ const CategoriesSection = () => {
                     onChange={() => dispatch(toggleCategory(cat.name))}
                     className="w-4 h-4 rounded border-white/30 cursor-pointer"
                   />
-                  <span className="text-sm text-white/60">{cat.name}</span>
+                  <span className="text-sm text-muted-foreground">{cat.name}</span>
                 </label>
               ))}
             </div>
           ) : (
-            <div className="text-sm text-white/60">No categories found</div>
+            <div className="text-sm text-muted-foreground">No categories found</div>
           )}
         </AccordionContent>
       </AccordionItem>

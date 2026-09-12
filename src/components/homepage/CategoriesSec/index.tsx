@@ -59,46 +59,47 @@ const CategoriesSec = async () => {
   if (categories.length === 0) return null;
 
   return (
-    <section className="max-w-frame mx-auto px-4 xl:px-0">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-5 sm:mb-7">Categories</h2>
+    // Sits directly on the light blue page background; cards are white.
+    <section className="py-9 sm:py-14">
+      <div className="max-w-frame mx-auto px-4 xl:px-0">
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-5 sm:mb-7">
+          Categories
+        </h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
-        {categories.map((cat) => (
-          <Link
-            key={cat.id}
-            href={cat.href}
-            className="group rounded-xl sm:rounded-2xl bg-card border border-border overflow-hidden transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <div className="relative aspect-[4/3] w-full overflow-hidden bg-secondary">
-              {cat.image ? (
-                <Image
-                  src={cat.image}
-                  alt={cat.name}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-secondary to-card">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
+          {categories.map((cat) => (
+            <Link
+              key={cat.id}
+              href={cat.href}
+              className="group block rounded-[4px] bg-card p-2 sm:p-2.5 shadow-[0_1px_3px_rgba(18,41,74,0.08)] ring-1 ring-border transition duration-200 hover:shadow-[0_6px_18px_rgba(18,41,74,0.12)] hover:ring-foreground/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[2px] bg-secondary">
+                {cat.image ? (
                   <Image
-                    src="/images/livo-mark.png"
-                    alt=""
-                    width={330}
-                    height={330}
-                    aria-hidden="true"
-                    className="w-1/3 h-auto opacity-20"
+                    src={cat.image}
+                    alt={cat.name}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                </div>
-              )}
-            </div>
+                ) : (
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-secondary to-accent"
+                  >
+                    <span className="text-3xl sm:text-4xl font-bold text-foreground/25">
+                      {cat.name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                )}
+              </div>
 
-            <div className="px-2 py-3 sm:px-3 sm:py-4">
-              <p className="text-center text-sm sm:text-base font-medium leading-snug line-clamp-2">
+              <p className="mt-2.5 sm:mt-3 mb-1 px-1 text-center text-sm sm:text-base font-bold text-foreground leading-snug line-clamp-2">
                 {cat.name}
               </p>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );

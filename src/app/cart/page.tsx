@@ -91,7 +91,7 @@ export default function CartPage() {
                 </h6>
                 <div className="flex flex-col space-y-5">
                   <div className="flex items-center justify-between">
-                    <span className="md:text-xl text-white/60">Subtotal</span>
+                    <span className="md:text-xl text-muted-foreground">Subtotal</span>
                     <span className="md:text-xl font-bold">₹{totalPrice}</span>
                   </div>
                   <div className="flex items-center justify-between">
@@ -132,7 +132,7 @@ export default function CartPage() {
             </div>
           </>
         ) : (
-          <div className="flex items-center flex-col text-gray-300 mt-32">
+          <div className="flex items-center flex-col text-muted-foreground mt-32">
             <TbBasketExclamation strokeWidth={1} className="text-6xl" />
             <span className="block mb-4">Your shopping cart is empty.</span>
             <Button className="rounded-full w-24" asChild>

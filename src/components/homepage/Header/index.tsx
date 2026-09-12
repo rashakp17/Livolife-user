@@ -394,6 +394,14 @@ export default function HeroBanner() {
         }
 
         @media (max-width: 640px) {
+          /* 92vh/560px is desktop-sized and swallows a phone screen. The slide
+             art is wider than it is tall, so a shorter box also crops less
+             horizontally. Keep in sync with src/styles/banner.css. */
+          .banner-root {
+            height: 56vh;
+            min-height: 320px;
+            max-height: 460px;
+          }
           .arrow-btn { display: none; }
           .banner-content { padding: 0 5vw; }
           .banner-content.right { justify-content: flex-start; }
@@ -436,8 +444,10 @@ style={{
           );
         })}
 
-        {/* overlay */}
-        <div className={`slide-overlay ${slides[current].align}`} />
+        {/* No dimming overlay — the slide art carries its own text, so the
+           gradient only washed the image out. Re-add <div className={`slide-overlay
+           ${slides[current].align}`} /> here if a slide ever needs the
+           headline/subheadline below to stay legible over a busy image. */}
 
         {/* text content — re-mount on slide change to retrigger animations */}
         <div className={`banner-content ${slides[current].align}`} key={current}>

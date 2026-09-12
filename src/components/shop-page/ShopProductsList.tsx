@@ -174,7 +174,7 @@ const ShopProductsList = () => {
     <div className="flex flex-col w-full space-y-5">
       {/* Active filter labels */}
       {(search || categories || minPrice || maxPrice) && (
-        <div className="text-sm text-white/60 space-y-1">
+        <div className="text-sm text-muted-foreground space-y-1">
           {search && <p>Results for: <span className="font-semibold text-black">"{search}"</span></p>}
           {categories && <p>Category: <span className="font-semibold text-black">{categories.split(",").join(", ")}</span></p>}
           {(minPrice || maxPrice) && (
@@ -196,7 +196,7 @@ const ShopProductsList = () => {
         </div>
       ) : (
         <div className="w-full text-center py-20">
-          <p className="text-white/60">
+          <p className="text-muted-foreground">
             {search ? `No products found for "${search}".` : "Loading..."}
           </p>
         </div>
@@ -219,7 +219,7 @@ const ShopProductsList = () => {
                     href="#"
                     onClick={(e) => { e.preventDefault(); setCurrentPage(page); }}
                     isActive={currentPage === page}
-                    className="text-white/50 font-medium text-sm"
+                    className="text-muted-foreground font-medium text-sm"
                   >
                     {page}
                   </PaginationLink>
@@ -227,7 +227,7 @@ const ShopProductsList = () => {
               ))}
               {totalPages > 5 && (
                 <PaginationItem>
-                  <PaginationEllipsis className="text-white/50 font-medium text-sm" />
+                  <PaginationEllipsis className="text-muted-foreground font-medium text-sm" />
                 </PaginationItem>
               )}
             </PaginationContent>

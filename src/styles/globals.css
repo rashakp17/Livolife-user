@@ -5,9 +5,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 240, 244, 248;
-  --background-start-rgb: 12, 22, 38;
-  --background-end-rgb: 12, 22, 38;
+  --foreground-rgb: 21, 35, 65;
+  --background-start-rgb: 239, 244, 251;
+  --background-end-rgb: 239, 244, 251;
 }
 
 @layer utilities {
@@ -18,37 +18,57 @@
 
 /*
   Brand palette derived from the livo logo (public/images/livo-logo.jpeg):
-  logo navy  #152341  ->  hsl(221 51% 17%)   [cards / raised surfaces]
-  logo mark  #ffffff  ->  near-white ice     [primary actions, headings]
+  logo navy  #152341  ->  hsl(221 51% 17%)   [text, buttons, chrome]
+  page       #EFF4FB  ->  hsl(208 60% 96%)   [light blue page background]
+
+  The page runs light blue. The navbar and footer opt back into the navy
+  palette by carrying `.surface-dark`, which re-declares the same token
+  names — so components inside them keep their existing token classes
+  (bg-background, bg-card, text-foreground, border-border) unchanged.
 */
 @layer base {
   :root {
-    --background: 221 52% 10%;
-    --foreground: 210 40% 96%;
-    --card: 221 51% 17%;
-    --card-foreground: 210 40% 96%;
-    --popover: 221 51% 17%;
-    --popover-foreground: 210 40% 96%;
-    --primary: 210 45% 94%;
-    --primary-foreground: 221 51% 15%;
-    --secondary: 221 45% 22%;
-    --secondary-foreground: 210 40% 96%;
-    --muted: 221 45% 22%;
-    --muted-foreground: 214 28% 74%;
-    --accent: 221 46% 26%;
-    --accent-foreground: 210 45% 95%;
-    --destructive: 0 72% 55%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 221 34% 27%;
-    --input: 221 34% 27%;
-    --ring: 210 45% 80%;
-    --chart-1: 221 60% 58%;
-    --chart-2: 199 65% 55%;
-    --chart-3: 262 45% 62%;
-    --chart-4: 174 50% 48%;
-    --chart-5: 210 45% 88%;
+    --background: 208 60% 96%;
+    --foreground: 221 51% 17%;
+    --card: 0 0% 100%;
+    --card-foreground: 221 51% 17%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 51% 17%;
+    --primary: 221 51% 17%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 44% 92%;
+    --secondary-foreground: 221 51% 17%;
+    --muted: 210 44% 92%;
+    --muted-foreground: 221 20% 42%;
+    --accent: 210 48% 89%;
+    --accent-foreground: 221 51% 17%;
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 213 32% 85%;
+    --input: 213 32% 85%;
+    --ring: 221 51% 30%;
+    --chart-1: 221 60% 48%;
+    --chart-2: 199 65% 45%;
+    --chart-3: 262 45% 52%;
+    --chart-4: 174 50% 38%;
+    --chart-5: 221 45% 30%;
     --radius: 0.5rem;
+
+    /* Pre-composed translucent text. These must be whole colours, not
+       hsl(var(--foreground) / a) — Lightning CSS cannot statically validate a
+       var() that expands to three space-separated channels and silently drops
+       the whole declaration. */
+    --text-muted-60: hsl(221 51% 17% / 0.6);
+    --text-muted-50: hsl(221 51% 17% / 0.5);
+    --text-muted-40: hsl(221 51% 17% / 0.4);
+    --text-muted-30: hsl(221 51% 17% / 0.3);
+    --text-muted-05: hsl(221 51% 17% / 0.05);
+    --text-placeholder: hsl(221 51% 17% / 0.45);
   }
+
+  /* Navy chrome — navbar and footer. Also aliased to .dark so any future
+     theme toggle keeps working. */
+  .surface-dark,
   .dark {
     --background: 221 52% 10%;
     --foreground: 210 40% 96%;
@@ -69,11 +89,13 @@
     --border: 221 34% 27%;
     --input: 221 34% 27%;
     --ring: 210 45% 80%;
-    --chart-1: 221 60% 58%;
-    --chart-2: 199 65% 55%;
-    --chart-3: 262 45% 62%;
-    --chart-4: 174 50% 48%;
-    --chart-5: 210 45% 88%;
+
+    --text-muted-60: hsl(210 40% 96% / 0.6);
+    --text-muted-50: hsl(210 40% 96% / 0.5);
+    --text-muted-40: hsl(210 40% 96% / 0.4);
+    --text-muted-30: hsl(210 40% 96% / 0.3);
+    --text-muted-05: hsl(210 40% 96% / 0.05);
+    --text-placeholder: hsl(210 40% 96% / 0.45);
   }
 }
 
@@ -85,18 +107,22 @@
     @apply bg-background text-foreground;
   }
 
-  /* Render black SVG icons as the logo's white mark */
-  img[src*="cart.svg"],
-  img[src*="search.svg"],
-  img[src*="envelope.svg"],
-  img[src*="close.svg"],
-  img[src*="menu.svg"],
-  img[src*="times.svg"],
-  img[src*="trash.svg"] {
+  /* The template ships black SVG icons. They are correct as-is on the light
+     page; only inside the navy chrome do they need flipping to the white mark. */
+  .surface-dark img[src*="cart.svg"],
+  .surface-dark img[src*="search.svg"],
+  .surface-dark img[src*="envelope.svg"],
+  .surface-dark img[src*="close.svg"],
+  .surface-dark img[src*="menu.svg"],
+  .surface-dark img[src*="times.svg"],
+  .surface-dark img[src*="trash.svg"] {
     filter: brightness(0) invert(1);
   }
 
-  /* Override arbitrary light backgrounds from the base template */
+  /* Every rule below resolves through the tokens above, so each one renders
+     light on the page and navy inside .surface-dark with no duplication. */
+
+  /* Arbitrary light backgrounds baked into the base template */
   .bg-\[\#F0F0F0\],
   .bg-\[\#F0EEED\] {
     background-color: hsl(var(--secondary)) !important;
@@ -105,7 +131,7 @@
     background-color: hsl(var(--accent)) !important;
   }
 
-  /* Override Tailwind's absolute black text/border classes */
+  /* Tailwind's absolute black text/border classes */
   .text-black {
     color: hsl(var(--foreground)) !important;
   }
@@ -113,37 +139,45 @@
     border-color: hsl(var(--border)) !important;
   }
   .placeholder\:text-black\/40::placeholder {
-    color: hsla(210, 30%, 92%, 0.45) !important;
+    color: var(--text-placeholder) !important;
   }
   .hover\:text-white:hover {
     color: hsl(var(--primary-foreground)) !important;
   }
 
-  /* Semi-transparent black text -> cool near-white on navy */
+  /* Semi-transparent black text */
   .text-black\/60 {
-    color: hsla(210, 30%, 94%, 0.6) !important;
+    color: var(--text-muted-60) !important;
   }
   .text-black\/50 {
-    color: hsla(210, 30%, 94%, 0.5) !important;
+    color: var(--text-muted-50) !important;
   }
   .text-black\/40 {
-    color: hsla(210, 30%, 94%, 0.4) !important;
+    color: var(--text-muted-40) !important;
   }
   .text-black\/30 {
-    color: hsla(210, 30%, 94%, 0.3) !important;
+    color: var(--text-muted-30) !important;
   }
   .text-black\/5 {
-    color: hsla(210, 30%, 94%, 0.05) !important;
+    color: var(--text-muted-05) !important;
   }
 
-  /* Override transparent black borders */
+  /* NOTE: do not try to re-colour Tailwind's own opacity utilities here
+     (.text-white\/60 and friends). Tailwind emits an identical selector in the
+     utilities layer and it wins regardless of !important, so the override is
+     silently dead — the .text-black\/NN rules below have that problem too, and
+     are harmless only because black at low opacity reads fine on the light
+     page. Body components use text-muted-foreground instead, which resolves
+     through the tokens above in both contexts. */
+
+  /* Transparent black borders */
   .border-black\/10,
   .border-black\/20,
   .border-black\/5 {
     border-color: hsl(var(--border)) !important;
   }
 
-  /* Map bg-black (template's black buttons/banners) to the logo's white mark */
+  /* The template's black buttons/banners -> navy on the page, white mark on navy */
   .bg-black {
     background-color: hsl(var(--primary)) !important;
   }
@@ -153,9 +187,9 @@
     color: hsl(var(--primary-foreground)) !important;
   }
 
-  /* Handle hovers */
   .hover\:bg-black:hover {
-    background-color: hsl(210 45% 82%) !important;
+    background-color: hsl(var(--primary)) !important;
     color: hsl(var(--primary-foreground)) !important;
+    opacity: 0.9;
   }
 }

@@ -10,9 +10,12 @@ const api = process.env.NEXT_PUBLIC_API_URL;
 async function getProducts(): Promise<Product[]> {
   if (!api) return [];
   try {
-    const res = await fetch(`${api}/product`, {
+    // Ask for an explicit limit: GET /api/product defaults to 10, so without
+    // this the "Explore for More" carousel silently stops at the 10th product.
+    const res = await fetch(`${api}/product?limit=100`, {
       next: { revalidate: 60 },
-    });    if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) return [];
+    });
+    if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) return [];
     const data = await res.json();
     if (!data.products) return [];
 
