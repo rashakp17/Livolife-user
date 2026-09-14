@@ -173,10 +173,15 @@
   /* 92vh/560px is desktop-sized and swallows a phone screen. The slide art is
      wider than it is tall, so a shorter box also crops less horizontally. */
   .banner-root {
-    height: 56vh;
-    min-height: 320px;
-    max-height: 460px;
+    height: 40vh;
+    min-height: 280px;
+    max-height: 360px;
   }
+  /* shorter box: scale text down so the slide copy isn't clipped */
+  .slide-tag { margin-bottom: 12px; padding: 4px 10px; }
+  .slide-headline { font-size: clamp(1.9rem, 8.5vw, 2.6rem); margin-bottom: 10px; }
+  .slide-sub { font-size: 0.85rem; line-height: 1.5; margin-bottom: 18px; }
+  .dots { bottom: 14px; }
   .arrow-btn { display: none; }
   .banner-content { padding: 0 5vw; }
   .banner-content.right { justify-content: flex-start; }

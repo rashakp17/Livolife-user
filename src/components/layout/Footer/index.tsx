@@ -1,10 +1,11 @@
 import { PaymentBadge, SocialNetworks } from "./footer.types";
-import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+// import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import LinksSection from "./LinksSection";
 import LayoutSpacing from "./LayoutSpacing";
 
+/*
 const socialsData: SocialNetworks[] = [
   {
     id: 1,
@@ -27,6 +28,7 @@ const socialsData: SocialNetworks[] = [
     url: "https://youtube.com/@hafizfaizhafizfaiz-fz8rs?si=r-Srr8blF_wr3zjL",
   },
 ];
+*/
 
 const paymentBadgesData: PaymentBadge[] = [
   {
@@ -73,6 +75,8 @@ const Footer = () => {
               <p className="text-muted-foreground text-sm mb-9">
                 Online B to B Medical Wholesale.
               </p>
+              {/* Social links hidden until real Livo accounts exist — the URLs
+                 below were the template's, pointing at unrelated accounts.
               <div className="flex items-center">
                 {socialsData.map((social) => (
                   <Link
@@ -84,6 +88,7 @@ const Footer = () => {
                   </Link>
                 ))}
               </div>
+              */}
             </div>
             <div className="hidden lg:grid col-span-9 lg:grid-cols-4 lg:pl-10">
               <LinksSection />
