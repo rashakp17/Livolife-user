@@ -398,15 +398,15 @@ export default function HeroBanner() {
              art is wider than it is tall, so a shorter box also crops less
              horizontally. Keep in sync with src/styles/banner.css. */
           .banner-root {
-            height: 40vh;
-            min-height: 280px;
-            max-height: 360px;
+            height: 26vh;
+            min-height: 190px;
+            max-height: 240px;
           }
-          /* shorter box: scale text down so the slide copy isn't clipped */
-          .slide-tag { margin-bottom: 12px; padding: 4px 10px; }
-          .slide-headline { font-size: clamp(1.9rem, 8.5vw, 2.6rem); margin-bottom: 10px; }
-          .slide-sub { font-size: 0.85rem; line-height: 1.5; margin-bottom: 18px; }
-          .dots { bottom: 14px; }
+          /* shorter box: scale text down and drop the subtext so the slide copy isn't clipped */
+          .slide-tag { margin-bottom: 6px; padding: 2px 8px; font-size: 0.55rem; }
+          .slide-headline { font-size: clamp(1.35rem, 6vw, 1.75rem); margin-bottom: 10px; }
+          .slide-sub { display: none; }
+          .dots { bottom: 8px; }
           .arrow-btn { display: none; }
           .banner-content { padding: 0 5vw; }
           .banner-content.right { justify-content: flex-start; }
