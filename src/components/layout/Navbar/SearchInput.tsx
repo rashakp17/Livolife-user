@@ -124,7 +124,7 @@ const SearchInput = () => {
         "md:relative md:flex md:items-center md:w-full md:mr-3 lg:mr-10",
         mobileOpen
           ? "absolute inset-0 z-30 flex items-center gap-2 px-4 bg-background md:px-0 md:bg-transparent"
-          : "ml-auto mr-4 md:ml-0"
+          : "mr-4"
       )}
     >
       {!mobileOpen && (

@@ -25,14 +25,14 @@ const TopNavbar = () => {
               priority
             />
           </Link>
-          <Link
-            href="/"
-            aria-label="Home"
-            className="flex items-center mr-3 lg:mr-10 text-foreground hover:opacity-70 transition-opacity"
-          >
-            <House className="w-6 h-6" />
-          </Link>
         </div>
+        <Link
+          href="/"
+          aria-label="Home"
+          className="flex items-center ml-auto mr-4 md:ml-0 md:mr-3 lg:mr-10 text-foreground hover:opacity-70 transition-opacity"
+        >
+          <House className="w-6 h-6" />
+        </Link>
         <Suspense fallback={<div className="hidden md:block w-full md:mr-3 lg:mr-10 h-10 bg-[#F0F0F0] rounded-full animate-pulse" />}>
           <SearchInput />
         </Suspense>
