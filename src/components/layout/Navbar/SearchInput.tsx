@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import InputGroup from "@/components/ui/input-group";
 import { useRouter } from "next/navigation";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Suggestion = {
   id: string;
@@ -19,6 +21,7 @@ const SearchInput = () => {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const api = process.env.NEXT_PUBLIC_API_URL;
@@ -85,38 +88,84 @@ const SearchInput = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+    inputRef.current?.focus();
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMobileSearch();
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [mobileOpen]);
+
+  const closeMobileSearch = () => {
+    setMobileOpen(false);
+    setShowSuggestions(false);
+  };
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
       router.push(`/shop?search=${encodeURIComponent(query.trim())}`);
       setShowSuggestions(false);
+      setMobileOpen(false);
     }
   };
 
   const handleSuggestionClick = (id: string, name: string) => {
     router.push(`/shop/product/${id}/${name.split(" ").join("-")}`);
     setShowSuggestions(false);
+    setMobileOpen(false);
   };
 
   return (
-    <div className="relative w-full md:mr-3 lg:mr-10">
-      <form onSubmit={handleSearch}>
-        <InputGroup className="flex bg-[#F0F0F0]">
+    <div
+      className={cn(
+        "md:relative md:flex md:items-center md:w-full md:mr-3 lg:mr-10",
+        mobileOpen
+          ? "absolute inset-0 z-30 flex items-center gap-2 px-4 bg-background md:px-0 md:bg-transparent"
+          : "ml-auto mr-4 md:ml-0"
+      )}
+    >
+      {!mobileOpen && (
+        <button
+          type="button"
+          aria-label="Open search"
+          onClick={() => setMobileOpen(true)}
+          className="md:hidden flex items-center p-1"
+        >
+          <Image priority src="/icons/search.svg" height={22} width={22} alt="" className="min-w-[22px] min-h-[22px]" />
+        </button>
+      )}
+
+      <form onSubmit={handleSearch} className={cn("flex-1", !mobileOpen && "hidden md:block")}>
+        <InputGroup className="flex bg-white">
           <InputGroup.Text>
-            <Image priority src="/icons/search.svg" height={20} width={20} alt="search" className="min-w-5 min-h-5" />
+            <Image priority src="/icons/search.svg" height={20} width={20} alt="search" className="min-w-5 min-h-5 !filter-none opacity-60" />
           </InputGroup.Text>
           <InputGroup.Input
             ref={inputRef}
             type="search"
             name="search"
             placeholder="Search for products..."
-            className="bg-transparent placeholder:text-black/40"
+            className="bg-transparent text-neutral-900 placeholder:text-neutral-500"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => query && suggestions.length > 0 && setShowSuggestions(true)}
           />
         </InputGroup>
       </form>
+
+      {mobileOpen && (
+        <button
+          type="button"
+          aria-label="Close search"
+          onClick={closeMobileSearch}
+          className="md:hidden flex items-center p-1 text-foreground"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      )}
 
       {showSuggestions && (
         <div

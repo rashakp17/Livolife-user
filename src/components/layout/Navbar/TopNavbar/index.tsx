@@ -3,6 +3,7 @@ import { integralCF } from "@/styles/fonts";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import Image from "next/image";
+import { House } from "lucide-react";
 import CartBtn from "./CartBtn";
 import SearchInput from "../SearchInput";
 
@@ -13,7 +14,7 @@ const TopNavbar = () => {
         <div className="flex items-center">
           <Link
             href="/"
-            className="flex items-center mr-3 lg:mr-10"
+            className="flex items-center mr-3 lg:mr-6"
           >
             <Image
               src="/images/livo-logo.png"
@@ -24,8 +25,15 @@ const TopNavbar = () => {
               priority
             />
           </Link>
+          <Link
+            href="/"
+            aria-label="Home"
+            className="flex items-center mr-3 lg:mr-10 text-foreground hover:opacity-70 transition-opacity"
+          >
+            <House className="w-6 h-6" />
+          </Link>
         </div>
-        <Suspense fallback={<div className="w-full md:mr-3 lg:mr-10 h-10 bg-[#F0F0F0] rounded-full animate-pulse" />}>
+        <Suspense fallback={<div className="hidden md:block w-full md:mr-3 lg:mr-10 h-10 bg-[#F0F0F0] rounded-full animate-pulse" />}>
           <SearchInput />
         </Suspense>
         <div className="flex items-center">
