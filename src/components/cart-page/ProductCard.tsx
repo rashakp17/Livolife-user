@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import {
   addToCart,
   CartItem,
+  itemTax,
   remove,
   removeCartItem,
 } from "@/lib/features/carts/cartsSlice";
@@ -61,18 +62,24 @@ const ProductCard = ({ data }: ProductCardProps) => {
             <PiTrashFill className="text-xl md:text-2xl text-red-600" />
           </Button>
         </div>
-        <div className="-mt-1">
-          <span className="text-black text-xs md:text-sm mr-1">Size:</span>
-          <span className="text-muted-foreground text-xs md:text-sm">
-           {data.attributes[1]}
-          </span>
-        </div>
-        <div className="mb-auto -mt-1.5">
-          <span className="text-black text-xs md:text-sm mr-1">Color:</span>
-          <span className="text-muted-foreground text-xs md:text-sm">
-             {data.attributes[0]}
-          </span>
-        </div>
+        {/* Both are optional — a product with no size or no colour would
+            otherwise render a dangling "Size:" with nothing after it. */}
+        {!!data.attributes[1] && (
+          <div className="-mt-1">
+            <span className="text-black text-xs md:text-sm mr-1">Size:</span>
+            <span className="text-muted-foreground text-xs md:text-sm">
+              {data.attributes[1]}
+            </span>
+          </div>
+        )}
+        {!!data.attributes[0] && (
+          <div className="mb-auto -mt-1.5">
+            <span className="text-black text-xs md:text-sm mr-1">Color:</span>
+            <span className="text-muted-foreground text-xs md:text-sm">
+              {data.attributes[0]}
+            </span>
+          </div>
+        )}
         <div className="flex items-center flex-wrap justify-between">
           <div className="flex items-center space-x-[5px] xl:space-x-2.5">
             {data.discount.percentage > 0 ? (
@@ -88,6 +95,13 @@ const ProductCard = ({ data }: ProductCardProps) => {
             ) : (
               <span className="font-bold text-black text-xl xl:text-2xl">
                 ₹{data.price}
+              </span>
+            )}
+            {/* The listed price is tax-exclusive, so show what GST adds rather
+                than letting the number jump silently in the total. */}
+            {!!data.taxRate && (
+              <span className="text-xs text-muted-foreground">
+                + ₹{Math.round(itemTax(data))} GST ({data.taxRate}%)
               </span>
             )}
             {/* {data.discount.percentage > 0 && (

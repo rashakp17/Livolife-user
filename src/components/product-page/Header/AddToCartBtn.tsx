@@ -26,6 +26,7 @@ const AddToCartBtn = ({ data, attributes = [] }: Props) => {
             price: data.price,
             attributes,
             discount: data.discount,
+            taxRate: data.taxRate ?? 0,
             quantity: data.quantity,
           })
         )

@@ -10,6 +10,7 @@ import { TbBasketExclamation } from "react-icons/tb";
 import React from "react";
 import { RootState } from "@/lib/store";
 import { useAppSelector } from "@/lib/hooks/redux";
+import { cartTax, itemTax } from "@/lib/features/carts/cartsSlice";
 import Link from "next/link";
 
 // WhatsApp configuration
@@ -20,6 +21,10 @@ export default function CartPage() {
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
     (state: RootState) => state.carts
   );
+
+  // Prices everywhere else are tax-exclusive; GST is added here and here only.
+  const totalTax = cartTax(cart);
+  const grandTotal = adjustedTotalPrice + totalTax;
 
   const handleCheckout = () => {
     try {
@@ -39,14 +44,22 @@ export default function CartPage() {
       cart.items.forEach((item, index) => {
         messageText += `\n${index + 1}. *${item.name}*\n`;
         messageText += `   • Quantity: ${item.quantity}\n`;
-        messageText += `   • Color: ${item.attributes[0] || "N/A"}\n`;
-        messageText += `   • Size: ${item.attributes[1] || "N/A"}\n`;
+        // Skip rather than send "N/A" — most items here have neither.
+        if (item.attributes[0]) messageText += `   • Color: ${item.attributes[0]}\n`;
+        if (item.attributes[1]) messageText += `   • Size: ${item.attributes[1]}\n`;
         messageText += `   • Price: ₹${Math.round(item.price * item.quantity)}\n`;
+        if (item.taxRate) {
+          messageText += `   • GST (${item.taxRate}%): ₹${Math.round(itemTax(item))}\n`;
+        }
         // messageText += `   • Image: ${item.srcUrl}\n`;
       });
       
       messageText += `\n━━━━━━━━━━━━━━━━━━━━━━\n`;
-      messageText += `\n💰 *Order Total:* ₹${Math.round(adjustedTotalPrice)}\n`;
+      messageText += `\n🧾 *Subtotal:* ₹${Math.round(adjustedTotalPrice)}\n`;
+      if (totalTax > 0) {
+        messageText += `🏷️ *GST:* ₹${Math.round(totalTax)}\n`;
+      }
+      messageText += `💰 *Order Total:* ₹${Math.round(grandTotal)}\n`;
       messageText += `📊 *Total Items:* ${cart.items.length}`;
       
       const message = encodeURIComponent(messageText);
@@ -112,13 +125,28 @@ export default function CartPage() {
                     </span>
                     <span className="md:text-xl font-bold">Free</span> */}
                   </div>
+                  {/* Only worth a line when something in the cart is actually
+                      taxed — an unconditional "GST ₹0" reads like a bug. */}
+                  {totalTax > 0 && (
+                    <div className="flex items-center justify-between">
+                      <span className="md:text-xl text-muted-foreground">GST</span>
+                      <span className="md:text-xl font-bold">
+                        ₹{Math.round(totalTax)}
+                      </span>
+                    </div>
+                  )}
                   <hr className="border-t-white/10" />
                   <div className="flex items-center justify-between">
                     <span className="md:text-xl text-black">Total</span>
                     <span className="text-xl md:text-2xl font-bold">
-                      ₹{Math.round(adjustedTotalPrice)}
+                      ₹{Math.round(grandTotal)}
                     </span>
                   </div>
+                  {totalTax > 0 && (
+                    <p className="text-xs text-muted-foreground -mt-2">
+                      Inclusive of GST
+                    </p>
+                  )}
                 </div>
                 <Button
                   type="button"

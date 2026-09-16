@@ -23,6 +23,9 @@ export type Product = {
   id: number | string;
   title: string;
   category?: string;
+  subCategory?: string;
+  /** GST percentage; prices elsewhere are tax-exclusive. */
+  taxRate?: number;
   description?: string;
   srcUrl: string;
   gallery?: string[];

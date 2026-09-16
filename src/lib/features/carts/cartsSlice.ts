@@ -29,6 +29,8 @@ export type CartItem = {
   price: number;
   attributes: string[];
   discount: Discount;
+  /** GST percentage captured when the item was added. */
+  taxRate?: number;
   quantity: number;
 };
 
@@ -198,5 +200,28 @@ export const cartsSlice = createSlice({
 });
 
 export const { addToCart, removeCartItem, remove } = cartsSlice.actions;
+
+/**
+ * Unit price after any discount — the base GST applies to. Mirrors what the
+ * cart line actually prints, so the tax always matches the price beside it.
+ */
+export const netUnitPrice = (item: CartItem): number =>
+  item.discount.percentage > 0
+    ? Math.round(item.price - (item.price * item.discount.percentage) / 100)
+    : item.discount.amount > 0
+    ? item.price - item.discount.amount
+    : item.price;
+
+/** GST on one cart line, across its full quantity. */
+export const itemTax = (item: CartItem): number =>
+  (netUnitPrice(item) * item.quantity * (item.taxRate ?? 0)) / 100;
+
+/**
+ * Total GST for the cart. Derived from the items on every render rather than
+ * accumulated into state — the running totals here are updated incrementally,
+ * and a tax accumulator would drift out of step with them on edge cases.
+ */
+export const cartTax = (cart: Cart | null): number =>
+  cart ? cart.items.reduce((sum, item) => sum + itemTax(item), 0) : 0;
 
 export default cartsSlice.reducer;

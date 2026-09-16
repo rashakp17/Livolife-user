@@ -1,24 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import CategoriesSection from "@/components/shop-page/filters/CategoriesSection";
 import PriceSection from "@/components/shop-page/filters/PriceSection";
 import { Button } from "@/components/ui/button";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/lib/store";
-import { useRouter } from "next/navigation";
-import { resetFilters } from "@/lib/features/filters/filtersSlice";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  resetFilters,
+  setCategories,
+  setSubCategories,
+} from "@/lib/features/filters/filtersSlice";
+
+const parseList = (value: string | null): string[] =>
+  value ? value.split(",").map((v) => v.trim()).filter(Boolean) : [];
 
 const Filters = ({ onApply }: { onApply?: () => void }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const filters = useSelector((state: RootState) => state.filters);
+
+  // Arriving from a category or subcategory link means the URL already carries a
+  // selection. Without this the boxes render unticked, and the first Apply would
+  // silently throw that selection away.
+  const categoriesParam = searchParams.get("categories");
+  const subCategoriesParam = searchParams.get("subcategories");
+
+  useEffect(() => {
+    dispatch(setCategories(parseList(categoriesParam)));
+    dispatch(setSubCategories(parseList(subCategoriesParam)));
+  }, [dispatch, categoriesParam, subCategoriesParam]);
 
   const handleApplyFilter = () => {
     const params = new URLSearchParams();
 
     if (filters.categories.length > 0) {
       params.append("categories", filters.categories.join(","));
+    }
+    if (filters.subCategories.length > 0) {
+      params.append("subcategories", filters.subCategories.join(","));
     }
     if (filters.sizes.length > 0) {
       params.append("sizes", filters.sizes.join(","));

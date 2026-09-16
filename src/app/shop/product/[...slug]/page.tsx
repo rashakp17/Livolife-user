@@ -45,6 +45,7 @@ async function getProduct(id: string): Promise<Product | null> {
       gallery: defaultVariant?.images || [],
       price: defaultVariant?.price || 0,
       discount: { amount: 0, percentage: 0 },
+      taxRate: p.taxRate ?? 0,
       rating: 4,
       variants,
     };

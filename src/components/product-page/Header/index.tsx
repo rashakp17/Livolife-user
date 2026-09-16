@@ -104,11 +104,13 @@ const Header = ({ data }: { data: Product }) => {
     price: displayPrice,
   };
 
-  // attributes passed to cart: [color, size]
+  // attributes passed to cart: [color, size] — positional, so it is NOT filtered.
+  // Dropping an empty colour here would slide the size into the colour slot and
+  // the cart would label a size as a colour.
   const cartAttributes = [
     selectedVariant?.color || "",
     selectedSize?.size || "",
-  ].filter(Boolean);
+  ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -141,8 +143,9 @@ const Header = ({ data }: { data: Product }) => {
 
         <hr className="h-[1px] border-t-black/10 mb-5" />
 
-        {/* Color / Variant selection */}
-        {variants.length > 0 && (
+        {/* Color / Variant selection — only when the variants actually name a
+            colour, otherwise this is a row of blank grey circles. */}
+        {variants.some((v) => v.color) && (
           <>
             <div className="flex flex-col mb-5">
               <span className="text-sm sm:text-base text-muted-foreground mb-3 capitalize">

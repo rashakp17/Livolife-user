@@ -18,6 +18,8 @@ interface ApiProduct {
   _id: string;
   name: string;
   category?: { name: string; _id?: string };
+  subCategory?: { name: string; _id?: string } | null;
+  taxRate?: number;
   variants?: Array<{
     images?: string[];
     price?: number;
@@ -69,6 +71,7 @@ const ShopProductsList = () => {
 
     const applyFilters = (all: Product[]) => {
       const categories = searchParams.get("categories");
+      const subcategories = searchParams.get("subcategories");
       const minPrice = searchParams.get("minPrice");
       const maxPrice = searchParams.get("maxPrice");
       const search = searchParams.get("search");
@@ -79,6 +82,14 @@ const ShopProductsList = () => {
         const selected = categories.split(",").map(c => c.trim().toLowerCase()).filter(Boolean);
         if (selected.length > 0) {
           filtered = filtered.filter(p => selected.includes((p.category || "").toLowerCase().trim()));
+        }
+      }
+      if (subcategories) {
+        // Narrows within the category filter rather than widening it: ticking a
+        // subcategory means "only these", which is what the nested checkboxes imply.
+        const selected = subcategories.split(",").map(c => c.trim().toLowerCase()).filter(Boolean);
+        if (selected.length > 0) {
+          filtered = filtered.filter(p => selected.includes((p.subCategory || "").toLowerCase().trim()));
         }
       }
       if (minPrice || maxPrice) {
@@ -133,10 +144,12 @@ const ShopProductsList = () => {
               id: p._id,
               title: p.name,
               category: p.category?.name || "General",
+              subCategory: p.subCategory?.name || "",
               srcUrl: v?.images?.[0] || "/images/pic1.png",
               gallery: v?.images || [],
               price: v?.price || 0,
               discount: { amount: 0, percentage: 0 },
+              taxRate: p.taxRate ?? 0,
               rating: 4,
             };
           });
@@ -167,16 +180,18 @@ const ShopProductsList = () => {
 
   const search = searchParams.get("search");
   const categories = searchParams.get("categories");
+  const subcategories = searchParams.get("subcategories");
   const minPrice = searchParams.get("minPrice");
   const maxPrice = searchParams.get("maxPrice");
 
   return (
     <div className="flex flex-col w-full space-y-5">
       {/* Active filter labels */}
-      {(search || categories || minPrice || maxPrice) && (
+      {(search || categories || subcategories || minPrice || maxPrice) && (
         <div className="text-sm text-muted-foreground space-y-1">
           {search && <p>Results for: <span className="font-semibold text-black">"{search}"</span></p>}
           {categories && <p>Category: <span className="font-semibold text-black">{categories.split(",").join(", ")}</span></p>}
+          {subcategories && <p>Subcategory: <span className="font-semibold text-black">{subcategories.split(",").join(", ")}</span></p>}
           {(minPrice || maxPrice) && (
             <p>Price: <span className="font-semibold text-black">₹{minPrice || "0"} – ₹{maxPrice || "∞"}</span></p>
           )}
