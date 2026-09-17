@@ -27,50 +27,13 @@ function resolveImage(c: ApiCategory): string | null {
   return null;
 }
 
-type ApiSubCategory = {
-  isActive?: boolean;
-  category?: { _id?: string } | string | null;
-};
-
-const parentId = (cat: ApiSubCategory["category"]): string =>
-  typeof cat === "string" ? cat : cat?._id ?? "";
-
-/** Ids of categories that actually have something to drill into. */
-async function getCategoriesWithChildren(): Promise<Set<string>> {
-  if (!api) return new Set();
-  try {
-    const res = await fetch(`${api}/subcategory/list`, {
-      next: { revalidate: 60 },
-    });
-    if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
-      return new Set();
-    }
-    const data = await res.json();
-    const subs: ApiSubCategory[] = Array.isArray(data.subCategories)
-      ? data.subCategories
-      : [];
-
-    return new Set(
-      subs
-        .filter((s) => s.isActive !== false)
-        .map((s) => parentId(s.category))
-        .filter(Boolean)
-    );
-  } catch {
-    return new Set();
-  }
-}
-
 async function getCategories(): Promise<Category[]> {
   if (!api) return [];
   try {
     // 60s to match the page's own revalidate and the product fetch. At the
     // previous 300s, a category added in admin took up to 5 minutes to appear
     // while products appeared in 1 — which reads as "the category is missing".
-    const [res, withChildren] = await Promise.all([
-      fetch(`${api}/category`, { next: { revalidate: 60 } }),
-      getCategoriesWithChildren(),
-    ]);
+    const res = await fetch(`${api}/category`, { next: { revalidate: 60 } });
     if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
       return [];
     }
@@ -84,12 +47,7 @@ async function getCategories(): Promise<Category[]> {
       .map((c) => ({
         id: c._id ?? c.slug ?? (c.name as string),
         name: c.name as string,
-        // Step through the subcategories when there are any; otherwise that
-        // screen would just bounce straight back out to the products anyway.
-        href:
-          c.slug && c._id && withChildren.has(c._id)
-            ? `/shop/category/${c.slug}`
-            : `/shop?categories=${encodeURIComponent(c.name as string)}`,
+        href: `/shop?categories=${encodeURIComponent(c.name as string)}`,
         image: resolveImage(c),
       }));
   } catch {
