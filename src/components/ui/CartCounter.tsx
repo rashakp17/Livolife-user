@@ -11,6 +11,12 @@ type CartCounterProps = {
   onRemove?: (value: number) => void;
   className?: string;
   initialValue?: number;
+  /**
+   * Drives the count from the outside. Pass it when the real number lives
+   * elsewhere (the cart) and must survive remounts — the internal counter
+   * would otherwise drift once the count reaches 0 and stops tracking.
+   */
+  value?: number;
 };
 
 const CartCounter = ({
@@ -19,23 +25,26 @@ const CartCounter = ({
   onRemove,
   className,
   initialValue = 1,
+  value,
 }: CartCounterProps) => {
   const [counter, setCounter] = useState<number>(initialValue);
+  const isControlled = value !== undefined;
+  const count = isControlled ? value : counter;
 
   const addToCart = () => {
     if (onAdd) {
-      onAdd(counter + 1);
+      onAdd(count + 1);
     }
-    setCounter(counter + 1);
+    if (!isControlled) setCounter(counter + 1);
   };
 
   const remove = () => {
-    if ((counter === 1 && !isZeroDelete) || counter <= 0) return;
+    if ((count === 1 && !isZeroDelete && !isControlled) || count <= 0) return;
 
     if (onRemove) {
-      onRemove(counter - 1);
+      onRemove(count - 1);
     }
-    if (counter - 1 <= 0) return;
+    if (isControlled || count - 1 <= 0) return;
     setCounter(counter - 1);
   };
 
@@ -52,11 +61,12 @@ const CartCounter = ({
         type="button"
         className="h-5 w-5 sm:h-6 sm:w-6 text-xl hover:bg-transparent"
         onClick={() => remove()}
+        disabled={count <= 0}
       >
         <FaMinus />
       </Button>
       <span className="font-medium text-sm sm:text-base">
-        {!isZeroDelete ? counter : initialValue}
+        {isControlled ? count : !isZeroDelete ? counter : initialValue}
       </span>
       <Button
         variant="ghost"
