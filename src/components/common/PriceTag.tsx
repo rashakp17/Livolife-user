@@ -2,10 +2,13 @@ import { cn } from "@/lib/utils";
 import { offerPercent } from "@/lib/pricing";
 
 const SIZES = {
-  sm: { price: "text-sm", original: "text-xs", badge: "text-[10px] py-0.5 px-2" },
-  md: { price: "text-xl xl:text-2xl", original: "text-base xl:text-xl", badge: "text-[10px] xl:text-xs py-1.5 px-3.5" },
-  lg: { price: "text-2xl sm:text-[32px]", original: "text-xl sm:text-[28px]", badge: "text-xs sm:text-sm py-1.5 px-3.5" },
+  sm: { price: "text-sm", original: "text-xs", pct: "text-xs" },
+  md: { price: "text-xl xl:text-2xl", original: "text-sm xl:text-base", pct: "text-sm xl:text-base" },
+  lg: { price: "text-2xl sm:text-[32px]", original: "text-base sm:text-xl", pct: "text-base sm:text-xl" },
 };
+
+/** 1499 → "1,499" (Indian grouping, so 150000 → "1,50,000"). */
+const formatINR = (n: number) => n.toLocaleString("en-IN");
 
 type PriceTagProps = {
   /** What the shopper pays. */
@@ -16,24 +19,22 @@ type PriceTagProps = {
   className?: string;
 };
 
-/** Offer price, the actual price struck through, and the "% off" badge. */
+/** "↓68%  ~~1,499~~  ₹483" — the % off, the actual price struck through, then the offer price. */
 const PriceTag = ({ price, originalPrice, size = "md", className }: PriceTagProps) => {
   const s = SIZES[size];
   const pct = offerPercent(price, originalPrice);
 
   return (
-    <div className={cn("flex items-center flex-wrap gap-x-2 gap-y-1", className)}>
-      <span className={cn("font-bold text-black", s.price)}>₹{price}</span>
+    <div className={cn("flex items-baseline flex-wrap gap-x-2 gap-y-1", className)}>
       {pct > 0 && (
         <>
-          <span className={cn("font-bold text-muted-foreground line-through", s.original)}>
-            ₹{originalPrice}
-          </span>
-          <span className={cn("font-medium rounded-full bg-[#FF3333]/10 text-[#FF3333]", s.badge)}>
-            -{pct}%
+          <span className={cn("font-bold text-[#388E3C]", s.pct)}>↓{pct}%</span>
+          <span className={cn("text-muted-foreground line-through", s.original)}>
+            {formatINR(originalPrice!)}
           </span>
         </>
       )}
+      <span className={cn("font-bold text-black", s.price)}>₹{formatINR(price)}</span>
     </div>
   );
 };
