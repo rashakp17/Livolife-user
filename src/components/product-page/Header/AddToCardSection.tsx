@@ -35,6 +35,7 @@ const AddToCardSection = ({ data, attributes = [] }: Props) => {
     name: data.title,
     srcUrl: data.srcUrl,
     price: data.price,
+    originalPrice: data.originalPrice,
     attributes,
     discount: data.discount,
     taxRate: data.taxRate ?? 0,

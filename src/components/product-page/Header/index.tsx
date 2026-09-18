@@ -6,6 +6,7 @@ import { Product, ProductVariant, SizeOption } from "@/types/product.types";
 import { integralCF } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 import AddToCardSection from "./AddToCardSection";
+import PriceTag from "@/components/common/PriceTag";
 import { IoMdCheckmark } from "react-icons/io";
 
 const colorMap: Record<string, string> = {
@@ -86,6 +87,9 @@ const Header = ({ data }: { data: Product }) => {
   );
 
   const displayPrice = selectedVariant?.price ?? data.price;
+  const displayOriginalPrice = selectedVariant
+    ? selectedVariant.originalPrice
+    : data.originalPrice;
   const displayImages = selectedVariant?.images?.length
     ? selectedVariant.images
     : data.gallery ?? [];
@@ -102,6 +106,7 @@ const Header = ({ data }: { data: Product }) => {
     srcUrl: displaySrc,
     gallery: displayImages,
     price: displayPrice,
+    originalPrice: displayOriginalPrice,
   };
 
   // attributes passed to cart: [color, size] — positional, so it is NOT filtered.
@@ -129,11 +134,12 @@ const Header = ({ data }: { data: Product }) => {
         </h1>
 
         {/* Price */}
-        <div className="flex items-center space-x-2.5 sm:space-x-3 mb-5">
-          <span className="font-bold text-black text-2xl sm:text-[32px]">
-            ₹{displayPrice}
-          </span>
-        </div>
+        <PriceTag
+          price={displayPrice}
+          originalPrice={displayOriginalPrice}
+          size="lg"
+          className="gap-x-2.5 sm:gap-x-3 mb-5"
+        />
 
         {/* Description */}
         <p className="text-sm sm:text-base text-muted-foreground mb-5">

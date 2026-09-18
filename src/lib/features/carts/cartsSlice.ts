@@ -27,6 +27,8 @@ export type CartItem = {
   name: string;
   srcUrl: string;
   price: number;
+  /** Actual price before the offer, for the strike-through; display only. */
+  originalPrice?: number;
   attributes: string[];
   discount: Discount;
   /** GST percentage captured when the item was added. */

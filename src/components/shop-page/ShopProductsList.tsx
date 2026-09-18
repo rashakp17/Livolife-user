@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/common/ProductCard";
 import { Product } from "@/types/product.types";
+import { variantPricing } from "@/lib/pricing";
 import {
   Pagination,
   PaginationContent,
@@ -22,6 +23,7 @@ interface ApiProduct {
   variants?: Array<{
     images?: string[];
     price?: number;
+    offerPrice?: number;
     isDefault?: boolean;
   }>;
 }
@@ -136,7 +138,7 @@ const ShopProductsList = () => {
               category: p.category?.name || "General",
               srcUrl: v?.images?.[0] || "/images/pic1.png",
               gallery: v?.images || [],
-              price: v?.price || 0,
+              ...variantPricing(v),
               discount: { amount: 0, percentage: 0 },
               taxRate: p.taxRate ?? 0,
               rating: 4,

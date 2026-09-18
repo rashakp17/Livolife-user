@@ -13,7 +13,10 @@ export type ProductVariant = {
   _id: string;
   color: string;
   sizesArray: SizeOption[];
+  /** What the shopper pays (the offer price when there is one). */
   price: number;
+  /** Actual price before the offer; only set when an offer applies. */
+  originalPrice?: number;
   stock: number;
   images: string[];
   isDefault: boolean;
@@ -28,7 +31,10 @@ export type Product = {
   description?: string;
   srcUrl: string;
   gallery?: string[];
+  /** What the shopper pays (the offer price when there is one). */
   price: number;
+  /** Actual price before the offer; only set when an offer applies. */
+  originalPrice?: number;
   discount: Discount;
   rating: number;
   variants?: ProductVariant[];

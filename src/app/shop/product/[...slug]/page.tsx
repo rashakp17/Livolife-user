@@ -1,6 +1,7 @@
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
 import { Product, ProductVariant } from "@/types/product.types";
+import { variantPricing } from "@/lib/pricing";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -28,7 +29,7 @@ async function getProduct(id: string): Promise<Product | null> {
             stock: s.stock ?? 0,
           }))
         : [],
-      price: v.price || 0,
+      ...variantPricing(v),
       stock: v.stock || 0,
       images: Array.isArray(v.images) ? v.images : v.images ? [v.images] : [],
       isDefault: !!v.isDefault,
@@ -44,6 +45,7 @@ async function getProduct(id: string): Promise<Product | null> {
       srcUrl: defaultVariant?.images?.[0] || "/images/pic1.png",
       gallery: defaultVariant?.images || [],
       price: defaultVariant?.price || 0,
+      originalPrice: defaultVariant?.originalPrice,
       discount: { amount: 0, percentage: 0 },
       taxRate: p.taxRate ?? 0,
       rating: 4,

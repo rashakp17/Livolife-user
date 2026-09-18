@@ -2,6 +2,7 @@ import ProductListSec from "@/components/common/ProductListSec";
 import HeroBanner from "@/components/homepage/Header";
 import CategoriesSec from "@/components/homepage/CategoriesSec";
 import { Product } from "@/types/product.types";
+import { variantPricing } from "@/lib/pricing";
 
 export const revalidate = 60;
 
@@ -28,7 +29,7 @@ async function getProducts(): Promise<Product[]> {
         category: p.category?.name || "General",
         srcUrl: defaultVariant?.images?.[0] || "/images/pic1.png",
         gallery: defaultVariant?.images || [],
-        price: defaultVariant?.price || 0,
+        ...variantPricing(defaultVariant),
         discount: { amount: 0, percentage: 0 },
         taxRate: p.taxRate ?? 0,
         rating: 4,

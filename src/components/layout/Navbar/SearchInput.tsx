@@ -6,12 +6,15 @@ import InputGroup from "@/components/ui/input-group";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { variantPricing } from "@/lib/pricing";
+import PriceTag from "@/components/common/PriceTag";
 
 type Suggestion = {
   id: string;
   title: string;
   category: string;
   price: number;
+  originalPrice?: number;
   srcUrl: string;
 };
 
@@ -55,7 +58,7 @@ const SearchInput = () => {
                 id: p._id,
                 title: p.name,
                 category: p.category?.name || "General",
-                price: v?.price || 0,
+                ...variantPricing(v),
                 srcUrl: v?.images?.[0] || "/images/pic1.png",
               };
             })
@@ -198,7 +201,7 @@ const SearchInput = () => {
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-black truncate">{p.title}</p>
                     <p className="text-xs text-white/60">{p.category}</p>
-                    <p className="text-sm font-semibold text-black mt-0.5">₹{p.price}</p>
+                    <PriceTag price={p.price} originalPrice={p.originalPrice} size="sm" className="mt-0.5" />
                   </div>
                 </button>
               ))}

@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types/product.types";
+import PriceTag from "./PriceTag";
 
 type ProductCardProps = {
   data: Product;
@@ -28,11 +29,7 @@ const ProductCard = ({ data, priority = false }: ProductCardProps) => {
       </div>
       <strong className="text-black xl:text-xl">{data.title}</strong>
       <p className="text-muted-foreground text-sm xl:text-base">{data.category}</p>
-      <div className="flex items-center space-x-[5px] xl:space-x-2.5">
-        <span className="font-bold text-black text-xl xl:text-2xl">
-          ₹{data.price}
-        </span>
-      </div>
+      <PriceTag price={data.price} originalPrice={data.originalPrice} />
     </Link>
   );
 };
