@@ -1,11 +1,9 @@
 "use client";
 
 import React from "react";
-import { PiTrashFill } from "react-icons/pi";
 import Image from "next/image";
 import Link from "next/link";
 import CartCounter from "@/components/ui/CartCounter";
-import { Button } from "../ui/button";
 import {
   addToCart,
   CartItem,
@@ -46,22 +44,6 @@ const ProductCard = ({ data }: ProductCardProps) => {
           >
             {data.name}
           </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-5 w-5 md:h-9 md:w-9"
-            onClick={() =>
-              dispatch(
-                remove({
-                  id: data.id,
-                  attributes: data.attributes,
-                  quantity: data.quantity,
-                })
-              )
-            }
-          >
-            <PiTrashFill className="text-xl md:text-2xl text-red-600" />
-          </Button>
         </div>
         {/* Both are optional — a product with no size or no colour would
             otherwise render a dangling "Size:" with nothing after it. */}
