@@ -118,7 +118,7 @@ const Header = ({ data }: { data: Product }) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
       <div>
         <PhotoSection data={displayProduct} />
       </div>
@@ -127,7 +127,7 @@ const Header = ({ data }: { data: Product }) => {
         <h1
           className={cn([
             integralCF.className,
-            "text-2xl md:text-[40px] md:leading-[40px] mb-3 md:mb-3.5 capitalize",
+            "text-2xl md:text-[40px] md:leading-[40px] mb-1.5 md:mb-3.5 capitalize",
           ])}
         >
           {data.title}
@@ -138,23 +138,23 @@ const Header = ({ data }: { data: Product }) => {
           price={displayPrice}
           originalPrice={displayOriginalPrice}
           size="lg"
-          className="gap-x-2.5 sm:gap-x-3 mb-5"
+          className="gap-x-2.5 sm:gap-x-3 mb-3 md:mb-5"
         />
 
         {/* Description */}
-        <p className="text-sm sm:text-base text-muted-foreground mb-5">
+        <p className="text-sm sm:text-base text-muted-foreground mb-3 md:mb-5">
           {data.description ||
             "This product is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style."}
         </p>
 
-        <hr className="h-[1px] border-t-black/10 mb-5" />
+        <hr className="h-[1px] border-t-black/10 mb-3 md:mb-5" />
 
         {/* Color / Variant selection — only when the variants actually name a
             colour, otherwise this is a row of blank grey circles. */}
         {variants.some((v) => v.color) && (
           <>
-            <div className="flex flex-col mb-5">
-              <span className="text-sm sm:text-base text-muted-foreground mb-3 capitalize">
+            <div className="flex flex-col mb-3 md:mb-5">
+              <span className="text-sm sm:text-base text-muted-foreground mb-2 md:mb-3 capitalize">
                 Select Color: <span className="text-foreground font-medium">{selectedVariant?.color}</span>
               </span>
               <div className="flex items-center flex-wrap gap-3">
@@ -183,15 +183,15 @@ const Header = ({ data }: { data: Product }) => {
                 })}
               </div>
             </div>
-            <hr className="h-[1px] border-t-black/10 mb-5" />
+            <hr className="h-[1px] border-t-black/10 mb-3 md:mb-5" />
           </>
         )}
 
         {/* Size selection */}
         {sizes.length > 0 && (
           <>
-            <div className="flex flex-col mb-5">
-              <span className="text-sm sm:text-base text-muted-foreground mb-4">
+            <div className="flex flex-col mb-3 md:mb-5">
+              <span className="text-sm sm:text-base text-muted-foreground mb-2 md:mb-4">
                 Choose Size
               </span>
               <div className="flex items-center flex-wrap gap-3">

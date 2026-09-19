@@ -82,7 +82,9 @@ export default async function ProductPage({
         <div className="max-w-frame mx-auto px-4 xl:px-0">
           <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
           <BreadcrumbProduct title={productData?.title ?? "product"} />
-          <section className="mb-11">
+          {/* Extra bottom padding on phones: the add-to-cart bar is fixed to the
+              bottom there and would otherwise sit on top of the size buttons. */}
+          <section className="mb-11 pb-20 md:pb-0">
             <Header data={productData} />
           </section>
         </div>

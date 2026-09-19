@@ -19,18 +19,24 @@ type PriceTagProps = {
   className?: string;
 };
 
-/** "↓68%  ~~1,499~~  ₹483" — the % off, the actual price struck through, then the offer price. */
+/** "↓68%  MRP ~~1,499~~  ₹483" — the % off, the actual price (labelled MRP) struck through, then the offer price. */
 const PriceTag = ({ price, originalPrice, size = "md", className }: PriceTagProps) => {
   const s = SIZES[size];
   const pct = offerPercent(price, originalPrice);
 
   return (
-    <div className={cn("flex items-baseline flex-wrap gap-x-2 gap-y-1", className)}>
+    // last-baseline so the stacked "MRP / ~~price~~" lines up on its number, not its label
+    <div className={cn("flex [align-items:last_baseline] flex-wrap gap-x-2 gap-y-1", className)}>
       {pct > 0 && (
         <>
           <span className={cn("font-bold text-[#388E3C]", s.pct)}>↓{pct}%</span>
-          <span className={cn("text-muted-foreground line-through", s.original)}>
-            {formatINR(originalPrice!)}
+          <span className="flex flex-col leading-tight">
+            <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              MRP
+            </span>
+            <span className={cn("text-muted-foreground line-through", s.original)}>
+              {formatINR(originalPrice!)}
+            </span>
           </span>
         </>
       )}
