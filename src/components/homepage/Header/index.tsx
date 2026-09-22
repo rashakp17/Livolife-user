@@ -165,14 +165,16 @@ export default function HeroBanner() {
         .slide-img {
           position: absolute;
           inset: 0;
-          background-size: cover;
+          /* contain, not cover: show the whole banner art instead of cropping it */
+          background-size: contain;
+          background-repeat: no-repeat;
           background-position: center;
           transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
                       transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .slide-img.active {
           opacity: 1;
-          transform: scale(1.03);
+          transform: scale(1);
           z-index: 2;
         }
         .slide-img.exiting {
