@@ -195,7 +195,7 @@ const SearchInput = () => {
                   onClick={() => handleSuggestionClick(p.id, p.title)}
                   className="w-full flex items-center gap-3 p-3 hover:bg-[#F0F0F0] transition-colors text-left"
                 >
-                  <div className="relative w-12 h-12 flex-shrink-0 rounded bg-[#F0F0F0] overflow-hidden">
+                  <div className="relative w-12 h-12 flex-shrink-0 rounded bg-white ring-1 ring-border overflow-hidden">
                     <Image src={p.srcUrl} alt={p.title} fill className="object-cover" unoptimized />
                   </div>
                   <div className="flex-1 min-w-0">
