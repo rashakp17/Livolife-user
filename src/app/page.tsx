@@ -4,7 +4,7 @@ import CategoriesSec from "@/components/homepage/CategoriesSec";
 import { Product } from "@/types/product.types";
 import { variantPricing } from "@/lib/pricing";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 const api = process.env.NEXT_PUBLIC_API_URL;
 
@@ -13,9 +13,7 @@ async function getProducts(): Promise<Product[]> {
   try {
     // Ask for an explicit limit: GET /api/product defaults to 10, so without
     // this the "Explore for More" carousel silently stops at the 10th product.
-    const res = await fetch(`${api}/product?limit=100`, {
-      next: { revalidate: 60 },
-    });
+    const res = await fetch(`${api}/product?limit=100`);
     if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) return [];
     const data = await res.json();
     if (!data.products) return [];

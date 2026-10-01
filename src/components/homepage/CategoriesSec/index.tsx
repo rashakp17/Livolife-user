@@ -30,10 +30,10 @@ function resolveImage(c: ApiCategory): string | null {
 async function getCategories(): Promise<Category[]> {
   if (!api) return [];
   try {
-    // 60s to match the page's own revalidate and the product fetch. At the
-    // previous 300s, a category added in admin took up to 5 minutes to appear
-    // while products appeared in 1 — which reads as "the category is missing".
-    const res = await fetch(`${api}/category`, { next: { revalidate: 60 } });
+    // No fetch-level revalidate: freshness comes from the home page's own
+    // `revalidate`. A shorter value here would pull the whole page down to it,
+    // and a separate data-cache entry only adds writes on every regeneration.
+    const res = await fetch(`${api}/category`);
     if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
       return [];
     }
