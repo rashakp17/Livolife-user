@@ -30,22 +30,22 @@ export default function CartPage() {
     try {
       // Check if cart has items
       if (!cart || !cart.items || cart.items.length === 0) {
-        alert("Your cart is empty!");
+        alert("Your cart is empty !");
         return;
       }
 
       // Build message with all order details
       let messageText = `${WHATSAPP_MESSAGE}\n\n`;
-      
+
       // Add order items details
       messageText += `📦 *Order Details:*\n`;
       messageText += `━━━━━━━━━━━━━━━━━━━━━━\n`;
-      
+
       cart.items.forEach((item, index) => {
         messageText += `\n${index + 1}. *${item.name}*\n`;
-        messageText += `   • Quantity: ${item.quantity}\n`;
+        messageText += `   • Quantity : ${item.quantity}\n`;
         // Skip rather than send "N/A" — most items here have neither.
-        if (item.attributes[0]) messageText += `   • Color: ${item.attributes[0]}\n`;
+        if (item.attributes[0]) messageText += `   • Color : ${item.attributes[0]}\n`;
         if (item.attributes[1]) messageText += `   • Size: ${item.attributes[1]}\n`;
         messageText += `   • Price: ₹${Math.round(item.price * item.quantity)}\n`;
         if (item.taxRate) {
@@ -53,7 +53,7 @@ export default function CartPage() {
         }
         // messageText += `   • Image: ${item.srcUrl}\n`;
       });
-      
+
       messageText += `\n━━━━━━━━━━━━━━━━━━━━━━\n`;
       messageText += `\n🧾 *Subtotal:* ₹${Math.round(adjustedTotalPrice)}\n`;
       if (totalTax > 0) {
@@ -61,10 +61,10 @@ export default function CartPage() {
       }
       messageText += `💰 *Order Total:* ₹${Math.round(grandTotal)}\n`;
       messageText += `📊 *Total Items:* ${cart.items.length}`;
-      
+
       const message = encodeURIComponent(messageText);
       const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${message}`;
-      
+
       // Use window.location.href for more reliable navigation
       window.location.href = whatsappUrl;
     } catch (error) {
